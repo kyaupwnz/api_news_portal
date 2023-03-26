@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
@@ -29,7 +29,10 @@ class NewsPostViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_staff:
             return NewsPost.objects.all()
-        return NewsPost.objects.filter(author=self.request.user)
+        if self.action in ['update', 'destroy', 'partial_update']:
+            return NewsPost.objects.filter(author=self.request.user)
+        return NewsPost.objects.all()
+
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
@@ -54,4 +57,6 @@ class CommentsViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_staff:
             return Comments.objects.all()
-        return Comments.objects.filter(author=self.request.user)
+        if self.action in ['update', 'destroy', 'partial_update']:
+            return Comments.objects.filter(author=self.request.user)
+        return Comments.objects.all()

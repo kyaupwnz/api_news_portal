@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'good_news',
     'users',
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,13 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+if CACHE_ENABLED:
+    CACHES = {
+        'default':
+            {
+                'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+                'LOCATION': 'redis://127.0.0.1:6379'
+            }
+    }
