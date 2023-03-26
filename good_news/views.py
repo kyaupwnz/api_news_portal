@@ -24,7 +24,7 @@ class NewsPostViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser | IsAuthenticated]
         if self.action == 'destroy':
             permission_classes = [IsAdminUser | IsAuthenticated]
-        return [permission() for permission in permission_classes]
+        return [permission() for permission in self.permission_classes]
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -52,7 +52,7 @@ class CommentsViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdminUser | IsAuthenticated]
         if self.action == 'destroy':
             permission_classes = [IsAdminUser | IsAuthenticated]
-        return [permission() for permission in permission_classes]
+        return [permission() for permission in self.permission_classes]
 
     def get_queryset(self):
         if self.request.user.is_staff:
